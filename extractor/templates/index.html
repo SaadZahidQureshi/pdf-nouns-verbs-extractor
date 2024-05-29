@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Extractor</title>
+</head>
+<body>
+    <h1>Upload a PDF</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" required>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('file', document.getElementById('file').files[0]);
+            formData.append('email', document.getElementById('email').value);
+
+            try {
+                const response = await fetch('/api/extracted_data/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                console.log(data)
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').innerText = 'An error occurred';
+            }
+        });
+    </script>
+</body>
+</html>
