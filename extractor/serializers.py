@@ -8,3 +8,4 @@ class ExtractedDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExtractedData
         fields = '__all__'
+
